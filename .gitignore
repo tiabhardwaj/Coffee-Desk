@@ -1,9 +1,10 @@
-  .env
-  .env.*
-  *.pem
-  *.key
-  __pycache__/
-  node_modules/
-  .venv/
-  .DS_Store
-  Thumbs.db
+node_modules/
+dist/
+.env
+.env.local
+server/data/
+*.log
+.DS_Store
+*.pem
+*.key
+Thumbs.db
