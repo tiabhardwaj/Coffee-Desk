@@ -8,3 +8,10 @@ server/data/
 *.pem
 *.key
 Thumbs.db
+
+# Working notes, kept local
+DECISIONS.md
+TASKS.md
+PLAN.md
+RESOURCES.md
+WALKTHROUGH.md
