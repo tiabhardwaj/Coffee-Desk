@@ -7,8 +7,10 @@ import { api } from './api.js'
 import { formatMinutes } from './format.js'
 import { initialState, tasksReducer } from './tasksReducer.js'
 import AddTask from './components/AddTask.jsx'
+import CupMeter from './components/CupMeter.jsx'
 import DoneLog from './components/DoneLog.jsx'
 import FocusTimer from './components/FocusTimer.jsx'
+import Hero from './components/Hero.jsx'
 import Notice from './components/Notice.jsx'
 import TaskList from './components/TaskList.jsx'
 
@@ -185,10 +187,7 @@ export default function App() {
         Skip to your tasks
       </a>
 
-      <header className="app-header">
-        <h1>Coffee Desk</h1>
-        <p>Three things today. Everything else can wait.</p>
-      </header>
+      <Hero />
 
       <main id="main" className="app-main">
         <Notice message={notice} onDismiss={() => setNotice(null)} />
@@ -219,6 +218,7 @@ export default function App() {
                 actionsFor={actionsFor}
                 onRemove={removeTask}
                 featured
+                extra={<CupMeter count={today.length} limit={TODAY_LIMIT} />}
               />
               <TaskList
                 id="inbox"

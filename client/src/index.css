@@ -1,20 +1,30 @@
 /* index.css — the calm look. Soft colours, generous space, and no red anywhere.
-   All colours are CSS variables, so the whole palette lives in one block. */
+   All colours are CSS variables, so the whole palette lives in one block.
+
+   Visual idea: a quiet morning at a desk. Dawn-lilac and warm amber for the
+   mood, teal for actions, deep indigo for the focus panel. */
 
 :root {
-  --bg: #f5f2ec;
-  --surface: #fffdf9;
-  --text: #2a2f33;
-  --muted: #565e65;
-  --line: #ddd6c9;
-  --control-line: #7b8288; /* input borders need 3:1 contrast to be visible */
-  --accent: #3f6f62; /* sage */
-  --accent-hover: #345b50;
-  --accent-soft: #e2ede8;
-  --notice-bg: #e8f0f5;
-  --notice-line: #b4c9d6;
-  --focus-ring: #1f4e79;
-  --radius: 0.65rem;
+  --bg: #eceff8; /* morning mist */
+  --surface: #fcfcff;
+  --text: #1e2235;
+  --muted: #50566e;
+  --line: #d6daea;
+  --control-line: #7a8099; /* input borders need 3:1 contrast to be visible */
+  --accent: #2b6f66; /* teal: actions */
+  --accent-hover: #225a53;
+  --accent-soft: #dcefeb;
+  --amber: #c98a3b; /* coffee: decoration only, never text */
+  --amber-soft: #fbead2;
+  --dusk: #2c3060; /* deep indigo: the focus panel */
+  --dusk-soft: #e4e6f8;
+  --notice-bg: #e6edf9;
+  --notice-line: #b4c4e4;
+  --focus-ring: #1f3f8a;
+  --radius: 1rem;
+  --shadow: 0 1px 2px rgb(30 34 53 / 6%), 0 8px 24px -12px rgb(44 48 96 / 22%);
+  --font-display: 'Bricolage Grotesque', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 *,
@@ -25,9 +35,12 @@
 
 body {
   margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(60rem 28rem at 85% -8rem, #f6e4d6 0%, transparent 70%),
+    radial-gradient(50rem 30rem at -10% 0, #dfe3fa 0%, transparent 65%), var(--bg);
+  background-repeat: no-repeat;
   color: var(--text);
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.5;
 }
@@ -37,6 +50,13 @@ h2,
 h3,
 p {
   margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
 }
 
 /* Keyboard users see exactly where they are. */
@@ -72,15 +92,8 @@ p {
 }
 
 .app-header {
-  padding-top: 2rem;
-  padding-bottom: 1rem;
-}
-.app-header h1 {
-  font-size: 1.9rem;
-  letter-spacing: -0.01em;
-}
-.app-header p {
-  color: var(--muted);
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .app-main {
@@ -95,6 +108,77 @@ p {
   padding-bottom: 2rem;
 }
 
+/* ---------- hero ---------- */
+
+.hero {
+  display: grid;
+  /* Two columns when there is room, one when there is not. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: linear-gradient(155deg, #dde2f8 0%, #f6e6dc 100%);
+  border: 1px solid #cfd5f0;
+  border-radius: 1.75rem;
+  box-shadow: var(--shadow);
+}
+.hero-copy {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+}
+.hero h1 {
+  font-size: clamp(2.6rem, 8vw, 4.4rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--dusk);
+}
+.hero-tagline {
+  max-width: 22rem;
+  font-size: 1.2rem;
+  color: var(--text);
+}
+.hero-art {
+  width: 100%;
+  height: auto;
+  max-height: 17rem;
+  border-radius: 1.2rem;
+  display: block;
+}
+
+/* Steam drifts up and fades. One gentle moment, nothing else moves by itself. */
+.steam {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: steam-rise 4.5s ease-in-out infinite;
+}
+.steam-2 {
+  animation-delay: 1.5s;
+}
+.steam-3 {
+  animation-delay: 3s;
+}
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  30% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .steam {
+    animation: none;
+    opacity: 0.75;
+  }
+}
+
 /* On wide screens, three columns. On phones they stack. No media query
    needed: auto-fit makes as many columns as fit, each at least 17rem. */
 .columns {
@@ -107,18 +191,30 @@ p {
 .column {
   display: grid;
   gap: 0.6rem;
-  padding: 1rem;
+  padding: 1.1rem;
   background: var(--surface);
   border: 1px solid var(--line);
+  border-top: 6px solid var(--column-color, var(--line));
   border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+/* Each list has its own colour, so you can tell where you are at a glance. */
+.column-today {
+  --column-color: var(--amber);
+}
+.column-inbox {
+  --column-color: #8f9bd8;
+}
+.column-later {
+  --column-color: #5fa69a;
 }
 .column-featured {
-  border-color: var(--accent);
-  border-width: 2px;
+  background: linear-gradient(180deg, var(--amber-soft) 0%, var(--surface) 11rem);
 }
 .column h2,
 .done-log h2 {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 .column-sub {
   color: var(--muted);
@@ -126,6 +222,28 @@ p {
 }
 .empty {
   color: var(--muted);
+}
+
+/* The three cups under "Today". */
+.cups {
+  display: flex;
+  gap: 0.5rem;
+  padding-block: 0.15rem;
+}
+.cup {
+  width: 2.6rem;
+  height: auto;
+  fill: none;
+  stroke: var(--dusk);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cup-body {
+  fill: transparent;
+}
+.cup-full .cup-body {
+  fill: var(--amber);
 }
 
 /* ---------- tasks ---------- */
@@ -140,10 +258,14 @@ p {
 .task {
   display: grid;
   gap: 0.35rem;
-  padding: 0.7rem 0.8rem;
-  background: var(--bg);
+  padding: 0.75rem 0.85rem;
+  background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-left: 5px solid var(--column-color, var(--line));
+  border-radius: 0.8rem;
+}
+.column-featured .task {
+  background: #fff;
 }
 .task-head {
   display: flex;
@@ -170,16 +292,19 @@ p {
 .btn {
   font: inherit;
   font-size: 0.9rem;
+  font-weight: 600;
   min-height: 2.5rem; /* comfortable tap target */
-  padding: 0 0.7rem;
+  padding: 0 0.9rem;
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 0.5rem;
+  border-radius: 999px;
   cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 .btn:hover:not(:disabled) {
-  background: #efe9de;
+  background: var(--dusk-soft);
+  border-color: #aeb5dc;
 }
 .btn:disabled {
   opacity: 0.5;
@@ -192,19 +317,28 @@ p {
 }
 .btn-primary:hover:not(:disabled) {
   background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 .btn-quiet {
   background: transparent;
   border-color: transparent;
   color: var(--muted);
+  font-weight: 500;
 }
 
 .add-task {
   display: grid;
-  gap: 0.4rem;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 .add-task label {
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
 }
 .add-row {
   display: flex;
@@ -215,14 +349,15 @@ p {
   flex: 1 1 14rem;
   font: inherit;
   min-height: 2.75rem;
-  padding: 0 0.8rem;
+  padding: 0 1rem;
   color: var(--text);
-  background: var(--surface);
+  background: #fff;
   border: 1px solid var(--control-line);
-  border-radius: 0.5rem;
+  border-radius: 999px;
 }
 .add-row .btn {
   min-height: 2.75rem;
+  padding-inline: 1.2rem;
 }
 
 /* ---------- messages and timer ---------- */
@@ -232,25 +367,27 @@ p {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.6rem 0.9rem;
+  padding: 0.6rem 0.9rem 0.6rem 1.1rem;
   background: var(--notice-bg);
   border: 1px solid var(--notice-line);
-  border-radius: var(--radius);
+  border-radius: 999px;
 }
 
+/* The focus panel is the one dark thing on the page, so it stands out. */
 .focus {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem 1.25rem;
-  padding: 0.9rem 1rem;
-  background: var(--accent-soft);
-  border: 1px solid var(--accent);
-  border-radius: var(--radius);
+  padding: 1.1rem 1.4rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--dusk) 0%, #3a3f7c 100%);
+  border-radius: 1.4rem;
+  box-shadow: var(--shadow);
 }
 .focus-label {
-  color: var(--muted);
+  color: #cfd3f3;
   font-size: 0.875rem;
 }
 .focus-task {
@@ -258,8 +395,22 @@ p {
   overflow-wrap: anywhere;
 }
 .focus-clock {
-  font-size: 2rem;
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
   font-variant-numeric: tabular-nums; /* digits keep equal width: no jitter */
+}
+.focus .btn-primary {
+  color: var(--dusk);
+  background: #fff;
+  border-color: #fff;
+}
+.focus .btn-primary:hover:not(:disabled) {
+  background: var(--amber-soft);
+  border-color: var(--amber-soft);
+}
+.focus :focus-visible {
+  outline-color: #fff;
 }
 
 /* ---------- done log ---------- */
@@ -267,20 +418,26 @@ p {
 .done-log {
   display: grid;
   gap: 0.8rem;
-  padding: 1rem;
+  padding: 1.1rem;
   background: var(--surface);
   border: 1px solid var(--line);
+  border-top: 6px solid var(--accent);
   border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 .done-day {
   display: grid;
   gap: 0.5rem;
 }
 .done-day h3 {
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 .done-meta {
   color: var(--muted);
+  font-family: var(--font-body);
   font-weight: 400;
   font-size: 0.9rem;
+}
+.done-log .task {
+  --column-color: var(--accent);
 }

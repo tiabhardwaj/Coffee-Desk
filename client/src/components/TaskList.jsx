@@ -14,15 +14,18 @@ export default function TaskList({
   actionsFor,
   onRemove,
   featured = false,
+  extra = null, // optional picture or widget shown under the subtitle
 }) {
   return (
     // aria-labelledby names this region after its heading for screen readers.
+    // The `column-${id}` class lets the stylesheet give each list its own colour.
     <section
-      className={featured ? 'column column-featured' : 'column'}
+      className={`column column-${id}${featured ? ' column-featured' : ''}`}
       aria-labelledby={`${id}-heading`}
     >
       <h2 id={`${id}-heading`}>{title}</h2>
       <p className="column-sub">{subtitle}</p>
+      {extra}
 
       {tasks.length === 0 ? (
         <p className="empty">{emptyText}</p>
