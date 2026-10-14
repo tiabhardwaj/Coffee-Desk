@@ -1,0 +1,286 @@
+/* index.css — the calm look. Soft colours, generous space, and no red anywhere.
+   All colours are CSS variables, so the whole palette lives in one block. */
+
+:root {
+  --bg: #f5f2ec;
+  --surface: #fffdf9;
+  --text: #2a2f33;
+  --muted: #565e65;
+  --line: #ddd6c9;
+  --control-line: #7b8288; /* input borders need 3:1 contrast to be visible */
+  --accent: #3f6f62; /* sage */
+  --accent-hover: #345b50;
+  --accent-soft: #e2ede8;
+  --notice-bg: #e8f0f5;
+  --notice-line: #b4c9d6;
+  --focus-ring: #1f4e79;
+  --radius: 0.65rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+/* Keyboard users see exactly where they are. */
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Hidden until a keyboard user tabs to it: jumps past the header. */
+.skip-link {
+  color: var(--text);
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  background: var(--surface);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius);
+  z-index: 10;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ---------- layout ---------- */
+
+.app-header,
+.app-main,
+.app-footer {
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-inline: 1rem; /* 16px gutter on phones */
+}
+
+.app-header {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+.app-header h1 {
+  font-size: 1.9rem;
+  letter-spacing: -0.01em;
+}
+.app-header p {
+  color: var(--muted);
+}
+
+.app-main {
+  display: grid;
+  gap: 1.25rem;
+  padding-bottom: 2rem;
+}
+
+.app-footer {
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding-bottom: 2rem;
+}
+
+/* On wide screens, three columns. On phones they stack. No media query
+   needed: auto-fit makes as many columns as fit, each at least 17rem. */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.column {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.column-featured {
+  border-color: var(--accent);
+  border-width: 2px;
+}
+.column h2,
+.done-log h2 {
+  font-size: 1.25rem;
+}
+.column-sub {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.empty {
+  color: var(--muted);
+}
+
+/* ---------- tasks ---------- */
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+.task {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.7rem 0.8rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.task-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.task-title {
+  overflow-wrap: anywhere; /* long words never break the layout */
+  padding-top: 0.45rem;
+}
+.task-focus {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+/* ---------- buttons and inputs ---------- */
+
+.btn {
+  font: inherit;
+  font-size: 0.9rem;
+  min-height: 2.5rem; /* comfortable tap target */
+  padding: 0 0.7rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.btn:hover:not(:disabled) {
+  background: #efe9de;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+.btn-quiet {
+  background: transparent;
+  border-color: transparent;
+  color: var(--muted);
+}
+
+.add-task {
+  display: grid;
+  gap: 0.4rem;
+}
+.add-task label {
+  font-weight: 600;
+}
+.add-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.add-row input {
+  flex: 1 1 14rem;
+  font: inherit;
+  min-height: 2.75rem;
+  padding: 0 0.8rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--control-line);
+  border-radius: 0.5rem;
+}
+.add-row .btn {
+  min-height: 2.75rem;
+}
+
+/* ---------- messages and timer ---------- */
+
+.notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--notice-bg);
+  border: 1px solid var(--notice-line);
+  border-radius: var(--radius);
+}
+
+.focus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  padding: 0.9rem 1rem;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+}
+.focus-label {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+.focus-task {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.focus-clock {
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums; /* digits keep equal width: no jitter */
+}
+
+/* ---------- done log ---------- */
+
+.done-log {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.done-day {
+  display: grid;
+  gap: 0.5rem;
+}
+.done-day h3 {
+  font-size: 1rem;
+}
+.done-meta {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.9rem;
+}
