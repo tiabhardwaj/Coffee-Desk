@@ -12,6 +12,7 @@ import FocusTimer from './components/FocusTimer.jsx'
 import Hero from './components/Hero.jsx'
 import Notice from './components/Notice.jsx'
 import TaskList from './components/TaskList.jsx'
+import TodayCups from './components/TodayCups.jsx'
 
 // Only used to grey out buttons and word hints. The server enforces the real
 // limit (decision D9), so changing this number alone would not unlock anything.
@@ -207,17 +208,16 @@ export default function App() {
           <>
             <FocusTimer session={session} taskTitle={focusTitle} onStop={stopFocus} />
 
+            <TodayCups
+              tasks={today}
+              limit={TODAY_LIMIT}
+              subtitle={todaySubtitle}
+              focusTaskId={session?.task_id ?? null}
+              actionsFor={actionsFor}
+              onRemove={removeTask}
+            />
+
             <div className="columns">
-              <TaskList
-                id="today"
-                title="Today"
-                subtitle={todaySubtitle}
-                tasks={today}
-                emptyText="Nothing here yet. Choose up to three from your Inbox."
-                actionsFor={actionsFor}
-                onRemove={removeTask}
-                featured
-              />
               <TaskList
                 id="inbox"
                 title="Inbox"

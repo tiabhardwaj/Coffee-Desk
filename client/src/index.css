@@ -59,6 +59,12 @@ h3 {
   letter-spacing: -0.02em;
 }
 
+h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
 /* Keyboard users see exactly where they are. */
 :focus-visible {
   outline: 3px solid var(--focus-ring);
@@ -198,6 +204,9 @@ h3 {
     animation: none;
     opacity: 0.8;
   }
+  .pulse {
+    animation: none;
+  }
 }
 
 /* On wide screens, three columns. On phones they stack. No media query
@@ -220,17 +229,11 @@ h3 {
   box-shadow: var(--shadow);
 }
 /* Each list has its own colour, so you can tell where you are at a glance. */
-.column-today {
-  --column-color: var(--amber);
-}
 .column-inbox {
   --column-color: #c9a574; /* kraft paper */
 }
 .column-later {
   --column-color: #7ea24a; /* matcha */
-}
-.column-featured {
-  background: linear-gradient(180deg, var(--amber-soft) 0%, var(--surface) 11rem);
 }
 .column h2,
 .done-log h2 {
@@ -241,8 +244,12 @@ h3 {
   color: var(--muted);
   font-size: 0.95rem;
 }
+.section-sub,
 .empty {
   color: var(--muted);
+}
+.section-sub {
+  margin: 0.4rem 0 1.25rem;
 }
 
 /* The three small cups under the headline. */
@@ -274,6 +281,98 @@ h3 {
 }
 .cup-full .cup-body {
   fill: #3a2618;
+}
+
+/* ---------- Today: cups on a counter ---------- */
+
+.today h2 {
+  font-size: 2.75rem;
+}
+.slots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.slot {
+  flex: 1 1 16rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.slot-art {
+  display: flex;
+  justify-content: center;
+}
+.mug {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+/* The wooden counter. Neighbouring slots touch, so it reads as one shelf. */
+.shelf {
+  height: 14px;
+  margin-inline: -1px; /* neighbouring planks overlap, so there is no seam */
+  background: var(--amber);
+  border-radius: 2px;
+  box-shadow: 0 8px 12px -8px rgb(42 29 21 / 55%);
+}
+.slot-body {
+  padding: 1rem 0.75rem 0;
+  text-align: center;
+}
+.slot-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere; /* long words never break the layout */
+}
+.slot-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 1.5rem;
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.slot-open .slot-title {
+  color: var(--muted);
+}
+.slot .task-actions {
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.mug-dashed {
+  fill: none;
+  stroke: #8a7560;
+  stroke-width: 2.6;
+  stroke-dasharray: 5 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* A small dot that pulses while you are focusing on a task. */
+.pulse {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: #5d8a3c;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
 }
 
 /* ---------- tasks ---------- */
