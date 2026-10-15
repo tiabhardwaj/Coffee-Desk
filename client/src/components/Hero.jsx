@@ -11,14 +11,19 @@
 // Under the headline, three small cups show how many of today's slots are
 // taken (CupMeter).
 
+import { useState } from 'react'
 import CupMeter from './CupMeter.jsx'
 
 export default function Hero({ count, limit }) {
-  const today = new Date().toLocaleDateString(undefined, {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-  })
+  // The date label is worked out once, when the page first loads. Passing a
+  // function to useState keeps the render itself free of new Date().
+  const [today] = useState(() =>
+    new Date().toLocaleDateString(undefined, {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+    }),
+  )
 
   return (
     <header className="app-header">
