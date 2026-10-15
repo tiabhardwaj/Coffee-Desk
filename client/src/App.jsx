@@ -165,7 +165,9 @@ export default function App() {
         return [toToday, move('later', 'Later', 'Move to Later')]
       case 'today':
         return [
-          move('done', 'Done', 'Mark as done'),
+          // `celebrate` asks TodayCups to play the drain-and-drop animation
+          // before the move happens.
+          { ...move('done', 'Done', 'Mark as done'), celebrate: true },
           {
             label: 'Focus',
             ariaLabel: `Start a focus session: ${task.title}`,

@@ -207,6 +207,12 @@ h2 {
   .pulse {
     animation: none;
   }
+  .mug-coffee {
+    transition: none;
+  }
+  .mug-leaving .mug-bean {
+    animation: none;
+  }
 }
 
 /* On wide screens, three columns. On phones they stack. No media query
@@ -346,6 +352,43 @@ h2 {
 .slot .task-actions {
   justify-content: center;
   margin-top: 0.5rem;
+}
+.slot-leaving .slot-title {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+/* "Done": the coffee drains, a bean drops off the shelf. */
+.mug-coffee {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 0.9s ease,
+    opacity 0.9s ease;
+}
+.mug-leaving .mug-coffee {
+  transform: scale(0.15, 0);
+  opacity: 0;
+}
+.mug-bean {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.mug-leaving .mug-bean {
+  animation: bean-drop 1.1s ease-in 0.6s forwards;
+}
+@keyframes bean-drop {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(78px);
+  }
 }
 .mug-dashed {
   fill: none;
