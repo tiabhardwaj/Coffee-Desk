@@ -22,6 +22,8 @@
   --notice-bg: #e6edf9;
   --notice-line: #b4c4e4;
   --matcha: #7ea24a;
+  --leaf-light: #b5d173;
+  --cream: #f6f1e2;
   --focus-ring: #3f5a2b; /* keyboard focus on buttons: deep matcha */
   --radius: 1rem;
   --shadow: 0 1px 2px rgb(30 34 53 / 6%), 0 8px 24px -12px rgb(44 48 96 / 22%);
@@ -199,25 +201,6 @@ h2 {
     transform: translateY(-14px);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .steam {
-    animation: none;
-    opacity: 0.8;
-  }
-  .pulse {
-    animation: none;
-  }
-  .mug-coffee {
-    transition: none;
-  }
-  .mug-leaving .mug-bean,
-  .bag-in .bag-bean,
-  .bag-out .bag-bean,
-  .bag-in .bag-body {
-    animation: none;
-  }
-}
-
 /* Inbox and Later side by side, stacking on a phone. */
 .two-up {
   display: flex;
@@ -643,25 +626,40 @@ h2 {
   border-radius: 999px;
 }
 
-/* The focus panel is the one dark thing on the page, so it stands out. */
+/* The one dark thing on the page, so the timer stands out. */
 .focus {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem 1.25rem;
-  padding: 1.1rem 1.4rem;
-  color: #fff;
-  background: linear-gradient(135deg, var(--dusk) 0%, #3a2618 100%);
-  border-radius: 1.4rem;
-  box-shadow: var(--shadow);
+  gap: 1.25rem 2rem;
+  padding: 1.5rem 2rem;
+  color: var(--cream);
+  background: var(--dusk);
+  border-radius: 2rem;
+}
+.focus-ring {
+  flex: none;
+}
+.focus-sweep {
+  transition: stroke-dasharray 1s linear;
+}
+.focus-text {
+  flex: 1 1 14rem;
+  min-width: 0;
 }
 .focus-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: #d9ccb4;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
 }
 .focus-task {
+  margin-top: 0.25rem;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
   font-weight: 600;
+  line-height: 1.15;
   overflow-wrap: anywhere;
 }
 .focus-clock {
@@ -672,12 +670,13 @@ h2 {
 }
 .focus .btn-primary {
   color: var(--dusk);
-  background: #fff;
-  border-color: #fff;
+  background: var(--leaf-light);
 }
 .focus .btn-primary:hover:not(:disabled) {
-  background: var(--amber-soft);
-  border-color: var(--amber-soft);
+  background: #cfe397;
+}
+.focus .pulse {
+  background: var(--leaf-light);
 }
 .focus :focus-visible {
   outline-color: #fff;
@@ -717,4 +716,55 @@ h2 {
 }
 .task-done svg {
   flex: none;
+}
+
+/* ---------- phones ---------- */
+
+@media (max-width: 40rem) {
+  .hero-inner {
+    min-height: 30rem;
+    padding-inline: 1rem;
+  }
+  .app-main,
+  .app-footer {
+    padding-inline: 1rem;
+  }
+  .two-up {
+    gap: 3rem;
+  }
+  .focus {
+    padding: 1.25rem;
+    border-radius: 1.5rem;
+  }
+  .add-task {
+    border-radius: 1.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+  }
+  .add-task .btn-primary {
+    flex: 1 1 100%;
+  }
+  .bag {
+    width: 9rem;
+  }
+}
+
+/* Calm by default: honour the device's "reduce motion" setting. */
+@media (prefers-reduced-motion: reduce) {
+  .steam {
+    animation: none;
+    opacity: 0.8;
+  }
+  .pulse {
+    animation: none;
+  }
+  .mug-coffee,
+  .focus-sweep {
+    transition: none;
+  }
+  .mug-leaving .mug-bean,
+  .bag-in .bag-bean,
+  .bag-out .bag-bean,
+  .bag-in .bag-body {
+    animation: none;
+  }
 }
