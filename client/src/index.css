@@ -218,40 +218,25 @@ h2 {
   }
 }
 
-/* On wide screens, two columns. On phones they stack. No media query
-   needed: auto-fit makes as many columns as fit, each at least 26rem. */
-.columns {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
-  gap: 1.25rem;
-  align-items: start;
+/* Inbox and Later side by side, stacking on a phone. */
+.two-up {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  margin-top: 1.5rem;
 }
-
-.column {
-  display: grid;
-  gap: 0.6rem;
-  padding: 1.1rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-top: 6px solid var(--column-color, var(--line));
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+.inbox,
+.later {
+  flex: 1 1 26rem;
+  min-width: 0;
 }
-/* Each list has its own colour, so you can tell where you are at a glance. */
-.column-inbox {
-  --column-color: #c9a574; /* kraft paper */
+.inbox h2,
+.later h2 {
+  font-size: 2.25rem;
 }
-.column-later {
-  --column-color: #7ea24a; /* matcha */
-}
-.column h2,
 .done-log h2 {
   font-size: 1.4rem;
   font-weight: 700;
-}
-.column-sub {
-  color: var(--muted);
-  font-size: 0.95rem;
 }
 .section-sub,
 .empty {
@@ -297,13 +282,15 @@ h2 {
 .today h2 {
   font-size: 2.75rem;
 }
-.slots {
+.slots,
+.jars {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  justify-content: center;
 }
 .slot {
   flex: 1 1 16rem;
@@ -315,7 +302,8 @@ h2 {
   display: flex;
   justify-content: center;
 }
-.mug {
+.mug,
+.jar {
   display: block;
   max-width: 100%;
   height: auto;
@@ -327,6 +315,9 @@ h2 {
   background: var(--amber);
   border-radius: 2px;
   box-shadow: 0 8px 12px -8px rgb(42 29 21 / 55%);
+}
+.shelf-thin {
+  height: 12px;
 }
 .slot-body {
   padding: 1rem 0.75rem 0;
@@ -352,7 +343,8 @@ h2 {
 .slot-open .slot-title {
   color: var(--muted);
 }
-.slot .task-actions {
+.slot .task-actions,
+.jar-cell .task-actions {
   justify-content: center;
   margin-top: 0.5rem;
 }
@@ -423,9 +415,6 @@ h2 {
 
 /* ---------- Inbox: a bag, with rows beside it ---------- */
 
-.inbox {
-  min-width: 0;
-}
 .inbox-body {
   display: flex;
   flex-wrap: wrap;
@@ -504,6 +493,31 @@ h2 {
 }
 .inbox-body > .empty {
   flex: 1 1 14rem;
+}
+
+/* ---------- Later: jars on a shelf ---------- */
+
+.jar-cell {
+  flex: 1 1 8rem;
+  max-width: 14rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.jar-cell .slot-body {
+  padding: 0.75rem 0.5rem 0;
+}
+.jar-title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.shelf-more {
+  margin: 1.5rem 0 0.25rem;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 /* ---------- tasks ---------- */

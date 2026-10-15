@@ -11,8 +11,8 @@ import DoneLog from './components/DoneLog.jsx'
 import FocusTimer from './components/FocusTimer.jsx'
 import Hero from './components/Hero.jsx'
 import InboxBag from './components/InboxBag.jsx'
+import LaterShelf from './components/LaterShelf.jsx'
 import Notice from './components/Notice.jsx'
-import TaskList from './components/TaskList.jsx'
 import TodayCups from './components/TodayCups.jsx'
 
 // Only used to grey out buttons and word hints. The server enforces the real
@@ -220,19 +220,16 @@ export default function App() {
               onRemove={removeTask}
             />
 
-            <div className="columns">
+            <div className="two-up">
               <InboxBag
                 tasks={inbox}
                 subtitle="Capture first, decide later."
                 actionsFor={actionsFor}
                 onRemove={removeTask}
               />
-              <TaskList
-                id="later"
-                title="Later"
-                subtitle="Safe to forget for now."
+              <LaterShelf
                 tasks={later}
-                emptyText="Nothing waiting."
+                subtitle="Stored for another day."
                 actionsFor={actionsFor}
                 onRemove={removeTask}
               />
