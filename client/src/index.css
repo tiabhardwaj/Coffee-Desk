@@ -278,34 +278,30 @@ h3 {
 
 /* ---------- tasks ---------- */
 
+/* A task is a plain row: title on the left, buttons on the right. Rows are
+   separated by a thin line instead of sitting in boxes. */
 .task-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  gap: 0.6rem;
 }
 .task {
-  display: grid;
-  gap: 0.35rem;
-  padding: 0.75rem 0.85rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-left: 5px solid var(--column-color, var(--line));
-  border-radius: 0.8rem;
-}
-.column-featured .task {
-  background: #fff;
-}
-.task-head {
   display: flex;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.25rem 0.75rem;
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--line);
+}
+.task-main {
+  flex: 1 1 11rem;
+  min-width: 0;
+  display: grid;
 }
 .task-title {
+  font-weight: 500;
   overflow-wrap: anywhere; /* long words never break the layout */
-  padding-top: 0.45rem;
 }
 .task-focus {
   color: var(--muted);
@@ -314,44 +310,50 @@ h3 {
 .task-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+}
+/* Only the Done log still uses this older row layout. */
+.task-head {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
 /* ---------- buttons and inputs ---------- */
 
 .btn {
+  min-height: 2.75rem; /* comfortable tap target */
+  padding: 0 0.95rem;
   font: inherit;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  min-height: 2.5rem; /* comfortable tap target */
-  padding: 0 0.9rem;
-  color: var(--text);
-  background: var(--surface);
-  border: 1px solid var(--line);
+  color: var(--accent-hover);
+  background: transparent;
+  border: 0;
   border-radius: 999px;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 .btn:hover:not(:disabled) {
-  background: var(--dusk-soft);
-  border-color: #b8c98f;
+  background: rgb(127 160 79 / 22%);
 }
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 .btn-primary {
-  color: #fff;
+  min-height: 3rem;
+  padding: 0 1.6rem;
+  color: #f6f4e4;
   background: var(--accent);
-  border-color: var(--accent);
+  font-size: 1rem;
+  font-weight: 700;
 }
 .btn-primary:hover:not(:disabled) {
   background: var(--accent-hover);
-  border-color: var(--accent-hover);
 }
 .btn-quiet {
-  background: transparent;
-  border-color: transparent;
   color: var(--muted);
   font-weight: 500;
 }
