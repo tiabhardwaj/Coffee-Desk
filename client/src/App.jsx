@@ -10,6 +10,7 @@ import AddTask from './components/AddTask.jsx'
 import DoneLog from './components/DoneLog.jsx'
 import FocusTimer from './components/FocusTimer.jsx'
 import Hero from './components/Hero.jsx'
+import InboxBag from './components/InboxBag.jsx'
 import Notice from './components/Notice.jsx'
 import TaskList from './components/TaskList.jsx'
 import TodayCups from './components/TodayCups.jsx'
@@ -220,12 +221,9 @@ export default function App() {
             />
 
             <div className="columns">
-              <TaskList
-                id="inbox"
-                title="Inbox"
-                subtitle="Capture first, decide later."
+              <InboxBag
                 tasks={inbox}
-                emptyText="Inbox is clear. Capture anything that comes to mind."
+                subtitle="Capture first, decide later."
                 actionsFor={actionsFor}
                 onRemove={removeTask}
               />

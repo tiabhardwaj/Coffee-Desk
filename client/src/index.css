@@ -215,11 +215,11 @@ h2 {
   }
 }
 
-/* On wide screens, three columns. On phones they stack. No media query
-   needed: auto-fit makes as many columns as fit, each at least 17rem. */
+/* On wide screens, two columns. On phones they stack. No media query
+   needed: auto-fit makes as many columns as fit, each at least 26rem. */
 .columns {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
   gap: 1.25rem;
   align-items: start;
 }
@@ -418,11 +418,37 @@ h2 {
   }
 }
 
+/* ---------- Inbox: a bag, with rows beside it ---------- */
+
+.inbox {
+  min-width: 0;
+}
+.inbox-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1rem 2rem;
+}
+.bag {
+  flex: none;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.inbox-list {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+.inbox-body > .empty {
+  flex: 1 1 14rem;
+}
+
 /* ---------- tasks ---------- */
 
 /* A task is a plain row: title on the left, buttons on the right. Rows are
    separated by a thin line instead of sitting in boxes. */
-.task-list {
+.task-list,
+.task-rows {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -498,6 +524,9 @@ h2 {
 .btn-quiet {
   color: var(--muted);
   font-weight: 500;
+}
+.more {
+  margin-top: 0.25rem;
 }
 
 /* ---------- add task: a pill floating over the hero ---------- */
