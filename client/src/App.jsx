@@ -7,7 +7,6 @@ import { api } from './api.js'
 import { formatMinutes } from './format.js'
 import { initialState, tasksReducer } from './tasksReducer.js'
 import AddTask from './components/AddTask.jsx'
-import CupMeter from './components/CupMeter.jsx'
 import DoneLog from './components/DoneLog.jsx'
 import FocusTimer from './components/FocusTimer.jsx'
 import Hero from './components/Hero.jsx'
@@ -187,7 +186,7 @@ export default function App() {
         Skip to your tasks
       </a>
 
-      <Hero />
+      <Hero count={today.length} limit={TODAY_LIMIT} />
 
       <main id="main" className="app-main">
         <AddTask onAdd={addTask} />
@@ -218,7 +217,6 @@ export default function App() {
                 actionsFor={actionsFor}
                 onRemove={removeTask}
                 featured
-                extra={<CupMeter count={today.length} limit={TODAY_LIMIT} />}
               />
               <TaskList
                 id="inbox"

@@ -7,8 +7,13 @@
 // the page with no hard edge. It is decoration only, so it is hidden from
 // screen readers. The steam animation is switched off in index.css for
 // people who have asked their device for reduced motion.
+//
+// Under the headline, three small cups show how many of today's slots are
+// taken (CupMeter).
 
-export default function Hero() {
+import CupMeter from './CupMeter.jsx'
+
+export default function Hero({ count, limit }) {
   const today = new Date().toLocaleDateString(undefined, {
     weekday: 'long',
     day: 'numeric',
@@ -94,6 +99,7 @@ export default function Hero() {
 
         <h1>Three for today.</h1>
         <p className="hero-tagline">Choose up to three tasks. Everything else can wait on the shelf.</p>
+        <CupMeter count={count} limit={limit} />
       </div>
     </header>
   )
