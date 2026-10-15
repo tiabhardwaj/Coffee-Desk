@@ -2,6 +2,10 @@
 //
 // Only the first four tasks are shown, so a long Inbox never turns into a
 // wall of rows. "Show more" reveals the rest.
+//
+// When the number of Inbox tasks changes, one bean animates: it drops into
+// the bag when a task arrives (added, or moved back here) and hops out of
+// the bag when one leaves (moved to Today or Later, or removed).
 
 import { useState } from 'react'
 import TaskItem from './TaskItem.jsx'
@@ -10,6 +14,16 @@ const VISIBLE = 4
 
 export default function InboxBag({ tasks, subtitle, actionsFor, onRemove }) {
   const [expanded, setExpanded] = useState(false)
+
+  // Spot a change in the task count while drawing (the pattern React's docs
+  // recommend for "adjusting state when a prop changes"). `n` goes up on every
+  // change; using it as the SVG's key restarts the animation each time.
+  const [prevCount, setPrevCount] = useState(tasks.length)
+  const [motion, setMotion] = useState({ kind: null, n: 0 })
+  if (tasks.length !== prevCount) {
+    setPrevCount(tasks.length)
+    setMotion({ kind: tasks.length > prevCount ? 'in' : 'out', n: motion.n + 1 })
+  }
 
   const shown = expanded ? tasks : tasks.slice(0, VISIBLE)
   const hidden = tasks.length - VISIBLE
@@ -21,7 +35,8 @@ export default function InboxBag({ tasks, subtitle, actionsFor, onRemove }) {
 
       <div className="inbox-body">
         <svg
-          className="bag"
+          key={motion.n}
+          className={motion.kind ? `bag bag-${motion.kind}` : 'bag'}
           width="210"
           height="290"
           viewBox="0 -40 210 290"
@@ -35,6 +50,12 @@ export default function InboxBag({ tasks, subtitle, actionsFor, onRemove }) {
           <ellipse cx="132" cy="42" rx="11" ry="7.5" transform="rotate(-10 132 42)" fill="#5a3b27" />
           <ellipse cx="90" cy="50" rx="11" ry="7.5" transform="rotate(35 90 50)" fill="#6b4630" />
           <ellipse cx="118" cy="52" rx="11" ry="7.5" transform="rotate(-35 118 52)" fill="#5a3b27" />
+          {/* the bean that drops in or hops out (hidden until a change) */}
+          <g className="bag-bean">
+            <ellipse cx="100" cy="30" rx="11" ry="7.5" fill="#6b4630" />
+            <path d="M91 30 C96 25 105 35 110 30" fill="none" stroke="#c9a574" strokeWidth="1.8" strokeLinecap="round" />
+          </g>
+          <g className="bag-body">
           <path d="M34 72 H166 L180 226 Q181 236 171 236 H29 Q19 236 20 226 Z" fill="#c9a574" stroke="#2a1d15" strokeWidth="2.6" strokeLinejoin="round" />
           <rect x="28" y="58" width="144" height="24" rx="10" fill="#b98f5c" stroke="#2a1d15" strokeWidth="2.6" />
           <path d="M34 96 H166" stroke="#2a1d15" strokeWidth="2" strokeDasharray="5 5" fill="none" />
@@ -43,6 +64,7 @@ export default function InboxBag({ tasks, subtitle, actionsFor, onRemove }) {
           <path d="M92 176 C98 170 96 162 102 158 S108 150 110 147" fill="none" stroke="#f6f1e2" strokeWidth="2.4" strokeLinecap="round" />
           <path d="M70 196 C66 184 76 176 88 178 C90 190 82 198 70 196Z" fill="#7ea24a" />
           <ellipse cx="190" cy="232" rx="9" ry="6" transform="rotate(-20 190 232)" fill="#5a3b27" />
+          </g>
         </svg>
 
         {tasks.length === 0 ? (

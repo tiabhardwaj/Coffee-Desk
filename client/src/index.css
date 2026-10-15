@@ -210,7 +210,10 @@ h2 {
   .mug-coffee {
     transition: none;
   }
-  .mug-leaving .mug-bean {
+  .mug-leaving .mug-bean,
+  .bag-in .bag-bean,
+  .bag-out .bag-bean,
+  .bag-in .bag-body {
     animation: none;
   }
 }
@@ -434,6 +437,66 @@ h2 {
   display: block;
   max-width: 100%;
   height: auto;
+}
+/* A bean drops into the bag (task arrives) or hops out of it (task leaves),
+   and the bag gives a small squish when a bean lands. */
+.bag-bean {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.bag-body {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+.bag-in .bag-bean {
+  animation: bean-into-bag 0.9s ease-in forwards;
+}
+.bag-in .bag-body {
+  animation: bag-squish 0.45s ease-out 0.55s;
+}
+.bag-out .bag-bean {
+  animation: bean-out-of-bag 0.9s ease-out forwards;
+}
+@keyframes bean-into-bag {
+  0% {
+    opacity: 0;
+    transform: translateY(-48px) rotate(-40deg);
+  }
+  20% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(18px) rotate(20deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(34px) rotate(30deg);
+  }
+}
+@keyframes bean-out-of-bag {
+  0% {
+    opacity: 1;
+    transform: translate(0, 18px) rotate(0deg);
+  }
+  45% {
+    opacity: 1;
+    transform: translate(34px, -34px) rotate(140deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(86px, 6px) rotate(300deg);
+  }
+}
+@keyframes bag-squish {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  40% {
+    transform: scale(1.03, 0.96);
+  }
 }
 .inbox-list {
   flex: 1 1 18rem;
