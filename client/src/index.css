@@ -16,8 +16,8 @@
   --leaf-light: #b5d173;
   --cream: #f6f1e2;
   --line: rgb(90 59 39 / 20%);
-  --notice-bg: #e4ecf7; /* soft blue, never red (D3) */
-  --notice-line: #b4c4e4;
+  --notice-bg: #dbe8b8; /* soft matcha, never red (D3) */
+  --notice-line: #a9c874;
   --focus-ring: #3f5a2b; /* keyboard focus on buttons: deep matcha */
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
