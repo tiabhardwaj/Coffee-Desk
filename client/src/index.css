@@ -1,32 +1,24 @@
-/* index.css — the calm look. Soft colours, generous space, and no red anywhere.
-   All colours are CSS variables, so the whole palette lives in one block.
+/* index.css — Coffee Desk's look: a tea-terrace morning, black coffee, and
+   matcha-green accents. Colours are CSS variables, so the whole palette lives
+   in one block.
 
-   Visual idea: a green-hills morning with a cup of black coffee. Matcha
-   green for the mood and for actions, coffee brown for text and the focus
-   panel. */
+   Layout rule: no boxes. Sections sit directly on the page and are separated
+   by space and thin lines; the only dark block is the focus timer. */
 
 :root {
-  --bg: #eef2dc; /* pale matcha: the page */
-  --surface: #fbfcf2;
-  --text: #2a1d15; /* espresso */
+  --ground: #eef2dc; /* the page. The hero's last hill is this exact colour */
+  --ink: #2a1d15; /* espresso: text and outlines */
   --muted: #6b5646;
-  --line: rgb(90 59 39 / 20%);
-  --control-line: #8a7560; /* input borders need 3:1 contrast to be visible */
-  --accent: #3f5a2b; /* deep matcha: actions */
-  --accent-hover: #2f4a20;
-  --accent-soft: #e3edc9;
-  --amber: #6b4630; /* roast brown: decoration only, never text */
-  --amber-soft: #efe4cf;
-  --dusk: #2a1d15; /* espresso: the focus panel */
-  --dusk-soft: #e3dccb;
-  --notice-bg: #e6edf9;
-  --notice-line: #b4c4e4;
+  --roast: #6b4630; /* wooden shelf */
   --matcha: #7ea24a;
+  --matcha-deep: #3f5a2b; /* filled buttons */
+  --matcha-ink: #2f4a20; /* text buttons */
   --leaf-light: #b5d173;
   --cream: #f6f1e2;
+  --line: rgb(90 59 39 / 20%);
+  --notice-bg: #e4ecf7; /* soft blue, never red (D3) */
+  --notice-line: #b4c4e4;
   --focus-ring: #3f5a2b; /* keyboard focus on buttons: deep matcha */
-  --radius: 1rem;
-  --shadow: 0 1px 2px rgb(30 34 53 / 6%), 0 8px 24px -12px rgb(44 48 96 / 22%);
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
@@ -39,8 +31,8 @@
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--ground);
+  color: var(--ink);
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.5;
@@ -57,7 +49,7 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 100; /* Fraunces: rounder, friendlier corners */
+  font-variation-settings: 'SOFT' 100;
   letter-spacing: -0.02em;
 }
 
@@ -75,14 +67,14 @@ h2 {
 
 /* Hidden until a keyboard user tabs to it: jumps past the header. */
 .skip-link {
-  color: var(--text);
   position: absolute;
   left: 1rem;
   top: -4rem;
-  background: var(--surface);
-  padding: 0.5rem 0.9rem;
-  border-radius: var(--radius);
   z-index: 10;
+  padding: 0.5rem 0.9rem;
+  color: var(--ink);
+  background: #fbfcf2;
+  border-radius: 999px;
 }
 .skip-link:focus {
   top: 1rem;
@@ -98,32 +90,8 @@ h2 {
   white-space: nowrap;
 }
 
-/* ---------- layout ---------- */
-
-.app-main,
-.app-footer {
-  width: 100%;
-  max-width: 75rem;
-  margin-inline: auto;
-  padding-inline: 1rem; /* 16px gutter on phones */
-}
-
-.app-main {
-  display: grid;
-  gap: 1.25rem;
-  padding-bottom: 2rem;
-}
-
-.app-footer {
-  color: var(--muted);
-  font-size: 0.9rem;
-  padding-bottom: 2rem;
-}
-
 /* ---------- hero ---------- */
 
-/* The header spans the full width. The picture fills it from behind, and the
-   text sits on top, lined up with the page content below. */
 .app-header {
   position: relative;
   overflow: hidden;
@@ -141,7 +109,7 @@ h2 {
   max-width: 75rem;
   min-height: 32.5rem;
   margin-inline: auto;
-  padding: 1.5rem 1rem 0;
+  padding: 1.5rem 1.5rem 0;
 }
 .hero-top {
   display: flex;
@@ -162,6 +130,7 @@ h2 {
 .hero-date {
   font-weight: 600;
 }
+.hero h1,
 .hero-inner h1 {
   margin-top: 2.75rem;
   max-width: 40rem;
@@ -176,7 +145,7 @@ h2 {
   font-size: 1.2rem;
 }
 
-/* Steam drifts up and fades. One gentle moment, nothing else moves by itself. */
+/* Steam drifts up and fades: the one gentle moment that moves by itself. */
 .steam {
   transform-box: fill-box;
   transform-origin: center bottom;
@@ -201,29 +170,6 @@ h2 {
     transform: translateY(-14px);
   }
 }
-/* Inbox and Later side by side, stacking on a phone. */
-.two-up {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4rem;
-  margin-top: 1.5rem;
-}
-.inbox,
-.later {
-  flex: 1 1 26rem;
-  min-width: 0;
-}
-.inbox h2,
-.later h2 {
-  font-size: 2.25rem;
-}
-.section-sub,
-.empty {
-  color: var(--muted);
-}
-.section-sub {
-  margin: 0.4rem 0 1.25rem;
-}
 
 /* The three small cups under the headline. */
 .cups {
@@ -243,7 +189,7 @@ h2 {
   width: 2.9rem;
   height: auto;
   fill: none;
-  stroke: var(--text);
+  stroke: var(--ink);
   stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -256,20 +202,142 @@ h2 {
   fill: #3a2618;
 }
 
+/* ---------- layout ---------- */
+
+.app-main {
+  display: grid;
+  gap: 2rem;
+  max-width: 75rem;
+  margin-inline: auto;
+  padding: 0 1.5rem 2.5rem;
+}
+.app-footer {
+  max-width: 75rem;
+  margin-inline: auto;
+  padding: 0 1.5rem 2.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.section-sub,
+.empty {
+  color: var(--muted);
+}
+.section-sub {
+  margin: 0.4rem 0 1.25rem;
+}
+
+/* Inbox and Later side by side, stacking on a phone. */
+.two-up {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  margin-top: 1.5rem;
+}
+.inbox,
+.later {
+  flex: 1 1 26rem;
+  min-width: 0;
+}
+.inbox h2,
+.later h2 {
+  font-size: 2.25rem;
+}
+
+/* ---------- add task: a pill floating over the hero ---------- */
+
+.add-task {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: -1.3rem;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  background: #fbfcf2;
+  border-radius: 999px;
+  box-shadow: 0 14px 34px -14px rgb(42 29 21 / 45%);
+}
+.add-task input {
+  flex: 1 1 16rem;
+  min-height: 3rem;
+  font: inherit;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+}
+/* No box around the text field. The whole pill glows green instead, so you
+   can still see where you are typing. */
+.add-task input:focus-visible {
+  outline: none;
+}
+.add-task:focus-within {
+  box-shadow:
+    0 0 0 2px var(--matcha),
+    0 14px 34px -14px rgb(42 29 21 / 45%);
+}
+.add-task input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  min-height: 2.75rem; /* comfortable tap target */
+  padding: 0 0.95rem;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--matcha-ink);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.btn:hover:not(:disabled) {
+  background: rgb(127 160 79 / 22%);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary {
+  min-height: 3rem;
+  padding: 0 1.6rem;
+  color: #f6f4e4;
+  background: var(--matcha-deep);
+  font-size: 1rem;
+  font-weight: 700;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--matcha-ink);
+}
+.btn-quiet {
+  color: var(--muted);
+  font-weight: 500;
+}
+.more {
+  margin-top: 0.25rem;
+}
+
 /* ---------- Today: cups on a counter ---------- */
 
 .today h2 {
   font-size: 2.75rem;
 }
 .slots,
-.jars {
+.jars,
+.task-rows {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+.slots,
+.jars {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: center;
 }
 .slot {
   flex: 1 1 16rem;
@@ -291,7 +359,7 @@ h2 {
 .shelf {
   height: 14px;
   margin-inline: -1px; /* neighbouring planks overlap, so there is no seam */
-  background: var(--amber);
+  background: var(--roast);
   border-radius: 2px;
   box-shadow: 0 8px 12px -8px rgb(42 29 21 / 55%);
 }
@@ -331,6 +399,25 @@ h2 {
   color: var(--muted);
   text-decoration: line-through;
 }
+
+.pulse {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: #5d8a3c;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
 /* "Done": the coffee drains, a bean drops off the shelf. */
 .mug-coffee {
   transform-box: fill-box;
@@ -371,25 +458,6 @@ h2 {
   stroke-dasharray: 5 6;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
-/* A small dot that pulses while you are focusing on a task. */
-.pulse {
-  display: inline-block;
-  width: 0.6rem;
-  height: 0.6rem;
-  background: #5d8a3c;
-  border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
 }
 
 /* ---------- Inbox: a bag, with rows beside it ---------- */
@@ -499,15 +567,8 @@ h2 {
   letter-spacing: 0;
 }
 
-/* ---------- tasks ---------- */
+/* ---------- plain task rows ---------- */
 
-/* A task is a plain row: title on the left, buttons on the right. Rows are
-   separated by a thin line instead of sitting in boxes. */
-.task-rows {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 .task {
   display: flex;
   flex-wrap: wrap;
@@ -524,7 +585,7 @@ h2 {
 }
 .task-title {
   font-weight: 500;
-  overflow-wrap: anywhere; /* long words never break the layout */
+  overflow-wrap: anywhere;
 }
 .task-focus {
   color: var(--muted);
@@ -535,92 +596,14 @@ h2 {
   flex-wrap: wrap;
 }
 
-/* ---------- buttons and inputs ---------- */
-
-.btn {
-  min-height: 2.75rem; /* comfortable tap target */
-  padding: 0 0.95rem;
-  font: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--accent-hover);
-  background: transparent;
-  border: 0;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-.btn:hover:not(:disabled) {
-  background: rgb(127 160 79 / 22%);
-}
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.btn-primary {
-  min-height: 3rem;
-  padding: 0 1.6rem;
-  color: #f6f4e4;
-  background: var(--accent);
-  font-size: 1rem;
-  font-weight: 700;
-}
-.btn-primary:hover:not(:disabled) {
-  background: var(--accent-hover);
-}
-.btn-quiet {
-  color: var(--muted);
-  font-weight: 500;
-}
-.more {
-  margin-top: 0.25rem;
-}
-
-/* ---------- add task: a pill floating over the hero ---------- */
-
-.add-task {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: -1.3rem; /* pulls the pill up over the bottom of the hero */
-  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
-  background: var(--surface);
-  border-radius: 999px;
-  box-shadow: 0 14px 34px -14px rgb(42 29 21 / 45%);
-}
-.add-task input {
-  flex: 1 1 16rem;
-  min-height: 3rem;
-  font: inherit;
-  color: var(--text);
-  background: transparent;
-  border: 0;
-}
-/* No box around the text field. The whole pill glows green instead, so you
-   can still see where you are typing. */
-.add-task input:focus-visible {
-  outline: none;
-}
-.add-task:focus-within {
-  box-shadow:
-    0 0 0 2px var(--matcha),
-    0 14px 34px -14px rgb(42 29 21 / 45%);
-}
-.add-task input::placeholder {
-  color: var(--muted);
-  opacity: 1;
-}
-
-/* ---------- messages and timer ---------- */
+/* ---------- messages and the focus timer ---------- */
 
 .notice {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.6rem 0.9rem 0.6rem 1.1rem;
+  padding: 0.5rem 0.75rem 0.5rem 1.25rem;
   background: var(--notice-bg);
   border: 1px solid var(--notice-line);
   border-radius: 999px;
@@ -634,7 +617,7 @@ h2 {
   gap: 1.25rem 2rem;
   padding: 1.5rem 2rem;
   color: var(--cream);
-  background: var(--dusk);
+  background: var(--ink);
   border-radius: 2rem;
 }
 .focus-ring {
@@ -669,7 +652,7 @@ h2 {
   font-variant-numeric: tabular-nums; /* digits keep equal width: no jitter */
 }
 .focus .btn-primary {
-  color: var(--dusk);
+  color: var(--ink);
   background: var(--leaf-light);
 }
 .focus .btn-primary:hover:not(:disabled) {
