@@ -10,7 +10,7 @@ Most to-do apps pile on pressure through long lists, red "overdue" labels and st
 * **A focus timer that counts up**, so there is no countdown to race.
 * **A Done log instead of streaks.** A record, not a score.
 
-Live demo: *add the deployed URL here*
+Live demo: https://coffee-desk-virid.vercel.app/
 
 ## Tech
 
