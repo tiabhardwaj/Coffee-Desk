@@ -190,6 +190,8 @@ export default function App() {
       <Hero />
 
       <main id="main" className="app-main">
+        <AddTask onAdd={addTask} />
+
         <Notice message={notice} onDismiss={() => setNotice(null)} />
 
         {!state.loaded ? (
@@ -205,8 +207,6 @@ export default function App() {
         ) : (
           <>
             <FocusTimer session={session} taskTitle={focusTitle} onStop={stopFocus} />
-
-            <AddTask onAdd={addTask} />
 
             <div className="columns">
               <TaskList

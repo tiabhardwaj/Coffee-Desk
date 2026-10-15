@@ -1,7 +1,7 @@
 /* index.css — the calm look. Soft colours, generous space, and no red anywhere.
    All colours are CSS variables, so the whole palette lives in one block.
 
-   Visual idea: a tea-terrace morning with a cup of black coffee. Matcha
+   Visual idea: a green-hills morning with a cup of black coffee. Matcha
    green for the mood and for actions, coffee brown for text and the focus
    panel. */
 
@@ -21,7 +21,8 @@
   --dusk-soft: #e3dccb;
   --notice-bg: #e6edf9;
   --notice-line: #b4c4e4;
-  --focus-ring: #1f3f8a;
+  --matcha: #7ea24a;
+  --focus-ring: #3f5a2b; /* keyboard focus on buttons: deep matcha */
   --radius: 1rem;
   --shadow: 0 1px 2px rgb(30 34 53 / 6%), 0 8px 24px -12px rgb(44 48 96 / 22%);
   --font-display: 'Fraunces', Georgia, serif;
@@ -77,6 +78,16 @@ h3 {
 }
 .skip-link:focus {
   top: 1rem;
+}
+
+/* Visually hidden but still read aloud. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 /* ---------- layout ---------- */
@@ -336,38 +347,41 @@ h3 {
   font-weight: 500;
 }
 
+/* ---------- add task: a pill floating over the hero ---------- */
+
 .add-task {
-  display: grid;
-  gap: 0.5rem;
-  padding: 1rem 1.1rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.add-task label {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
-}
-.add-row {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.5rem;
-}
-.add-row input {
-  flex: 1 1 14rem;
-  font: inherit;
-  min-height: 2.75rem;
-  padding: 0 1rem;
-  color: var(--text);
-  background: #fff;
-  border: 1px solid var(--control-line);
+  margin-top: -1.3rem; /* pulls the pill up over the bottom of the hero */
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  background: var(--surface);
   border-radius: 999px;
+  box-shadow: 0 14px 34px -14px rgb(42 29 21 / 45%);
 }
-.add-row .btn {
-  min-height: 2.75rem;
-  padding-inline: 1.2rem;
+.add-task input {
+  flex: 1 1 16rem;
+  min-height: 3rem;
+  font: inherit;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+}
+/* No box around the text field. The whole pill glows green instead, so you
+   can still see where you are typing. */
+.add-task input:focus-visible {
+  outline: none;
+}
+.add-task:focus-within {
+  box-shadow:
+    0 0 0 2px var(--matcha),
+    0 14px 34px -14px rgb(42 29 21 / 45%);
+}
+.add-task input::placeholder {
+  color: var(--muted);
+  opacity: 1;
 }
 
 /* ---------- messages and timer ---------- */

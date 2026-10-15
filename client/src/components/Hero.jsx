@@ -1,5 +1,5 @@
 // Hero.jsx — the first thing you see: the product name, a big promise, and
-// a hand-drawn tea-terrace morning with a cup of black coffee in front.
+// a hand-drawn green-hills morning with a cup of black coffee in front.
 //
 // The scene is an inline SVG drawn for this project (no image files, no
 // stock assets), so it loads instantly and scales to any screen. The last
