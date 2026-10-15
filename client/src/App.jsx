@@ -7,12 +7,13 @@ import { api } from './api.js'
 import { formatMinutes } from './format.js'
 import { initialState, tasksReducer } from './tasksReducer.js'
 import AddTask from './components/AddTask.jsx'
-import CupMeter from './components/CupMeter.jsx'
 import DoneLog from './components/DoneLog.jsx'
 import FocusTimer from './components/FocusTimer.jsx'
 import Hero from './components/Hero.jsx'
+import InboxBag from './components/InboxBag.jsx'
+import LaterShelf from './components/LaterShelf.jsx'
 import Notice from './components/Notice.jsx'
-import TaskList from './components/TaskList.jsx'
+import TodayCups from './components/TodayCups.jsx'
 
 // Only used to grey out buttons and word hints. The server enforces the real
 // limit (decision D9), so changing this number alone would not unlock anything.
@@ -165,7 +166,9 @@ export default function App() {
         return [toToday, move('later', 'Later', 'Move to Later')]
       case 'today':
         return [
-          move('done', 'Done', 'Mark as done'),
+          // `celebrate` asks TodayCups to play the drain-and-drop animation
+          // before the move happens.
+          { ...move('done', 'Done', 'Mark as done'), celebrate: true },
           {
             label: 'Focus',
             ariaLabel: `Start a focus session: ${task.title}`,
@@ -187,9 +190,11 @@ export default function App() {
         Skip to your tasks
       </a>
 
-      <Hero />
+      <Hero count={today.length} limit={TODAY_LIMIT} />
 
       <main id="main" className="app-main">
+        <AddTask onAdd={addTask} />
+
         <Notice message={notice} onDismiss={() => setNotice(null)} />
 
         {!state.loaded ? (
@@ -206,35 +211,25 @@ export default function App() {
           <>
             <FocusTimer session={session} taskTitle={focusTitle} onStop={stopFocus} />
 
-            <AddTask onAdd={addTask} />
+            <TodayCups
+              tasks={today}
+              limit={TODAY_LIMIT}
+              subtitle={todaySubtitle}
+              focusTaskId={session?.task_id ?? null}
+              actionsFor={actionsFor}
+              onRemove={removeTask}
+            />
 
-            <div className="columns">
-              <TaskList
-                id="today"
-                title="Today"
-                subtitle={todaySubtitle}
-                tasks={today}
-                emptyText="Nothing here yet. Choose up to three from your Inbox."
-                actionsFor={actionsFor}
-                onRemove={removeTask}
-                featured
-                extra={<CupMeter count={today.length} limit={TODAY_LIMIT} />}
-              />
-              <TaskList
-                id="inbox"
-                title="Inbox"
-                subtitle="Capture first, decide later."
+            <div className="two-up">
+              <InboxBag
                 tasks={inbox}
-                emptyText="Inbox is clear. Capture anything that comes to mind."
+                subtitle="Capture first, decide later."
                 actionsFor={actionsFor}
                 onRemove={removeTask}
               />
-              <TaskList
-                id="later"
-                title="Later"
-                subtitle="Safe to forget for now."
+              <LaterShelf
                 tasks={later}
-                emptyText="Nothing waiting."
+                subtitle="Stored for another day."
                 actionsFor={actionsFor}
                 onRemove={removeTask}
               />

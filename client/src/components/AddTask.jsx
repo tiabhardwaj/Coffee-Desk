@@ -1,4 +1,5 @@
-// AddTask.jsx — the Inbox quick-capture form.
+// AddTask.jsx — the Inbox quick-capture form, a pill that floats over the
+// bottom of the hero picture.
 //
 // This is a "controlled input": React state (`title`) is the single source
 // of truth for what the box contains. Typing calls setTitle, which re-renders
@@ -23,21 +24,22 @@ export default function AddTask({ onAdd }) {
 
   return (
     <form className="add-task" onSubmit={handleSubmit}>
-      <label htmlFor="new-task">Capture a thought</label>
-      <div className="add-row">
-        <input
-          id="new-task"
-          type="text"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          maxLength={200}
-          placeholder="Add anything. You can sort it later."
-          autoComplete="off"
-        />
-        <button type="submit" className="btn btn-primary" disabled={!title.trim() || saving}>
-          Add to Inbox
-        </button>
-      </div>
+      {/* Visually hidden, but still read aloud by screen readers. */}
+      <label htmlFor="new-task" className="sr-only">
+        Capture a thought
+      </label>
+      <input
+        id="new-task"
+        type="text"
+        value={title}
+        onChange={(event) => setTitle(event.target.value)}
+        maxLength={200}
+        placeholder="What is on your mind?"
+        autoComplete="off"
+      />
+      <button type="submit" className="btn btn-primary" disabled={!title.trim() || saving}>
+        Add to Inbox
+      </button>
     </form>
   )
 }

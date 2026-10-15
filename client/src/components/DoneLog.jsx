@@ -3,6 +3,7 @@
 // day looks the same as any other day: it simply isn't there.
 
 import { dayLabel, formatMinutes, localDateKey } from '../format.js'
+import Bean from './Bean.jsx'
 
 // Turn a flat list (already newest-first) into [[dayKey, tasks[]], ...].
 // A Map remembers insertion order, so days stay newest-first too.
@@ -38,23 +39,24 @@ export default function DoneLog({ tasks, onUndo }) {
                   {focusSeconds > 0 && ` · ${formatMinutes(focusSeconds)} focused`}
                 </span>
               </h3>
-              <ul className="task-list">
+              <ul className="task-rows">
                 {items.map((task) => (
-                  <li key={task.id} className="task">
-                    <div className="task-head">
+                  <li key={task.id} className="task task-done">
+                    <Bean checked />
+                    <div className="task-main">
                       <span className="task-title">{task.title}</span>
-                      <button
-                        type="button"
-                        className="btn btn-quiet"
-                        onClick={() => onUndo(task)}
-                        aria-label={`Move back to Inbox: ${task.title}`}
-                      >
-                        Undo
-                      </button>
+                      {task.focus_seconds > 0 && (
+                        <span className="task-focus">{formatMinutes(task.focus_seconds)} focused</span>
+                      )}
                     </div>
-                    {task.focus_seconds > 0 && (
-                      <span className="task-focus">{formatMinutes(task.focus_seconds)} focused</span>
-                    )}
+                    <button
+                      type="button"
+                      className="btn btn-quiet"
+                      onClick={() => onUndo(task)}
+                      aria-label={`Move back to Inbox: ${task.title}`}
+                    >
+                      Undo
+                    </button>
                   </li>
                 ))}
               </ul>
